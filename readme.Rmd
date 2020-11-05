@@ -1,0 +1,150 @@
+---
+title: "t Mixture Model"
+output:
+  github_document:
+    pandoc_args: --webtex
+---
+
+# Model
+
+Say we have a set of  $p$ dimensional observations $\{\boldsymbol{X_1}, \dots, \boldsymbol{X_n}\}$. A t Mixture Model (tMM) is a parametric probabilistic model that assumes each observation,  $\boldsymbol{X_i}$, is generated from a finite mixture of multivariate t distributions. Unlike Gaussian Mixture models (GMMs), tMMs are robust to outliers, and as such can be used as a robust method of clustering. This robustness, however, comes at a computational expense.
+
+A random vector $\boldsymbol{T}$ of dimension $p$ is said to follow a multivariate t distribution, $\boldsymbol {T} \sim t(\boldsymbol {\mu}, \boldsymbol{ \Sigma}, \nu)$,x` if the probability density function of $T$ is:
+
+
+$$f_{\boldsymbol{T}}(\boldsymbol{x}| \boldsymbol{\mu}, \boldsymbol{\Sigma}, \nu) = \frac{\Gamma[(\nu + p)/2]}{\Gamma(\nu/2)\nu^{p/2}\lambda^{p/2} |\boldsymbol{\Sigma}|^{\frac{1}{2}}}  \left[1 + \frac{1}{\nu}(\boldsymbol{x} - \boldsymbol{\mu})^T \boldsymbol {\Sigma^{-1}}(\boldsymbol{x} - \boldsymbol{\mu}) \right]^{-(\nu+p)/2}$$
+
+Where $\boldsymbol{\mu}$ is a $p \times 1$ location vector, $\boldsymbol{\Sigma}$ is a $p \times p$ positive definite scale matrix and $\nu$, the degrees of freedom, is a positive real number.
+
+A random vector $\boldsymbol{\tau}$ is said to be $G$ component finite mixture of multivariate $t$ distributions if the probability density function of $\boldsymbol{\tau}$ is given by:
+
+$$
+f_{\boldsymbol{\tau}}\left(\boldsymbol {x} | \lambda_g, \boldsymbol{\mu_g}, \boldsymbol{\Sigma_g}, \nu_g; g = 1,\dots G \right) = \sum_{g=1}^G \lambda_g f_{\boldsymbol{T_g}}(\boldsymbol{x} | \boldsymbol{\mu_g}, \boldsymbol{\Sigma_g}, \nu_g ) 
+$$
+
+where
+
+$$
+\boldsymbol{T_g} \overset{\text{ind}}{\sim} t(\boldsymbol{\mu_g}, \boldsymbol{\Sigma_g}, \nu_g), \quad \sum_{g=1}^G \lambda_g = 1, \quad 0 \leq \lambda_g \leq 1, \forall g
+$$
+
+# Parameter Estimation
+
+The parameters of the model are $\lambda_g, \boldsymbol{\mu_g}, \boldsymbol{\Sigma_g}, \nu_g$ for $g = 1, \dots, G$ ($G$, the number of components, is assumed to be known) and are estimated using maximum likelihood. However, the likelihood function is difficult to maximize using standard methods and so a special case of the minorize-maximize algorithm, the Expectation Maximization (EM) algorithm, is used. The EM algorithm is an iterative algorithm in which the parameters of the model are updated at each iteration (divided into an E-step and then an M-step) until a specified stopping criterion. Like many iterative algorithms the EM algorithm requires a starting estimate for the parameters. One of the advantages of the EM algorithm is that the parameter estimates at each iteration of the algorithm are guaranteed to yield a greater log likelihood than the parameter estimates of the previous iteration, a consequence of Jensen's Inequality. The parameter estimates at each iteration are as follows:
+
+**E step**
+
+The values computed in the E-step are to compute the parameter estimates in the M-step.
+
+$$
+E[Z_{ig}|\boldsymbol{X_i}] =  \frac{\lambda_g f_{\boldsymbol{T_g}}(\boldsymbol{X_i})}{\sum_{g=1}^G \lambda_g f_{\boldsymbol{T_g}}(\boldsymbol{X_i})}, \quad \forall i,g
+$$ 
+
+$$
+E \left[U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i}  \right] = \frac{v_g + p}{ \nu_{g} + (\boldsymbol{X_i} - \boldsymbol{\mu_{g}})^T \boldsymbol{\Sigma_{g}}^{-1}(\boldsymbol{X_i} - \boldsymbol{\mu_{g}})}, \quad \forall i,g
+$$
+
+$\psi(\cdot )$ denotes the digamma function.
+
+**M step**
+
+$$
+\hat \lambda_g = \frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}] }{n} = \text{Ave}_{i=1, \dots, n}(E[Z_{ig}|\boldsymbol{X_i}]), \quad \forall g
+$$
+
+$$
+\hat {\boldsymbol{\mu_g}} = \frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}]  E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i}\right] \boldsymbol{X_i} } {\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}]  E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i} \right] }, \quad \forall g
+$$
+
+$$
+\hat {\boldsymbol{\Sigma_g}} = \frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}]E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i} \right](\boldsymbol{X_i} - {\boldsymbol{\hat \mu_g}})(\boldsymbol{X_i} - {\boldsymbol{\hat \mu_g}})^T}{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}] }, \quad \forall g
+$$
+
+The estimate for the $\nu_g$'s must be found by solving the following univariate equations for each $g$:
+
+$$
+\log{(\frac{\nu}{2})} - \psi(\frac{\nu}{2}) + 1 - \log{(\frac{\nu_i + p}{2})} +\frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}] (\log{(E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i} \right])} - E \left [U_{ig}| \boldsymbol  {X_i}, \boldsymbol{Z_i} \right])} {\sum_{i = 1}^n E[Z_{ig}|\boldsymbol{X_i}]} = 0
+$$
+
+# Application
+
+
+In order to demonstrate the tMM's robustness to outliers, we will simulate 100 points from a GMM (bivariate, 3 componenets, equal mixing probabilities), add 10 points as noise (sampled from a uniform distribution) and assess the fit of both a GMM and a tMM.
+
+```{r, eval=FALSE}
+#install package
+devtools::install_github('AshwinPuri13/tMM')
+```
+
+```{r}
+library(RColorBrewer)
+library(MASS)
+suppressWarnings(library(mixtools))
+
+set.seed(5)
+
+mu1 = c(0, 3)
+mu2 = c(3, 0)
+mu3 = c(-3, 0)
+
+sigma1 = matrix( c(2, 0.5, 0.5, 0.5), nrow =2)
+sigma2 = matrix( c(1,0,0,0.1), nrow = 2)
+sigma3 = matrix( c(2, -0.5, -0.5, 0.5), nrow =2)
+
+
+lambda0 = c(1,1,1)/3
+mu0 = list(mu1, mu2, mu3)
+sigma0 = list(sigma1, sigma2, sigma3)
+
+rmvnormmix = function(n, lambda, mu, sigma) {
+  G = length(lambda)
+  t(sapply(1:n, function(...) {
+  Zi = sample(x = 1:G, size = 1, prob = lambda)
+  rmvnorm(n = 1, mu = mu[[Zi]], sigma = sigma[[Zi]])
+  }))
+}
+
+e = cbind(runif(n = 10, min = -10, max = 10), runif(n = 10, min = -10, max = 10))
+x = rbind(rmvnormmix(n = 100, lambda = lambda0, mu = mu0, sigma = sigma0), e)
+
+plot(x, cex = 0.4)
+```
+
+First, using the mixtools package, we fit a GMM with 3 components:
+
+```{r}
+theta.GMM = mvnormalmixEM(x = x, k = 3)
+
+fit.GMM = rmvnormmix(n = 10000, lambda = theta.GMM$lambda, mu = theta.GMM$mu, sigma = theta.GMM$sigma)
+
+z = kde2d(fit.GMM [,1], fit.GMM [,2], n = 50)
+
+my.cols = rev(c("black", "black", "gray", "purple", "red", brewer.pal(11, "RdYlBu")))
+plot(x, pch = 19, cex = .4)
+
+contour(z, drawlabels = FALSE, nlevels = 11, col = my.cols, add = TRUE)
+```
+
+Note that we have 2 concerns here: 
+
+1. The GMM was poorly fit due to the added noise. 
+
+2. We had to specify the exact number of components. 
+
+Next, fitting a tMM (where we specify the range of the number of components to be 2,3,4):
+
+```{r}
+library(tMM)
+
+theta.tMM = mvtmixEM(x = x, G_range = 2:4)
+
+fit.tMM =  rmvtmix(n = 10000, mu = theta.tMM$mu, sigma = theta.tMM$sigma, 
+                   nu = theta.tMM$nu, lambda = theta.tMM$lambda)
+
+z = kde2d(fit.tMM[,1], fit.tMM[,2], n = 500)
+
+plot(x, pch =19, cex = .4)
+
+print(paste0('Number of components :', theta.tMM$G))
+contour(z, drawlabels = FALSE, nlevels = 11, col = my.cols, add=TRUE)
+```
