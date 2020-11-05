@@ -5,6 +5,13 @@ output:
     pandoc_args: --webtex
 ---
 
+# Installation
+
+```{r, eval=FALSE}
+#install package
+devtools::install_github('AshwinPuri13/tMM')
+```
+
 # Model
 
 Say we have a set of  $p$ dimensional observations $\{\boldsymbol{X_1}, \dots, \boldsymbol{X_n}\}$. A t Mixture Model (tMM) is a parametric probabilistic model that assumes each observation,  $\boldsymbol{X_i}$, is generated from a finite mixture of multivariate t distributions. Unlike Gaussian Mixture models (GMMs), tMMs are robust to outliers, and as such can be used as a robust method of clustering. This robustness, however, comes at a computational expense.
@@ -70,11 +77,6 @@ $$
 
 
 In order to demonstrate the tMM's robustness to outliers, we will simulate 100 points from a GMM (bivariate, 3 componenets, equal mixing probabilities), add 10 points as noise (sampled from a uniform distribution) and assess the fit of both a GMM and a tMM.
-
-```{r, eval=FALSE}
-#install package
-devtools::install_github('AshwinPuri13/tMM')
-```
 
 ```{r}
 library(RColorBrewer)
@@ -145,6 +147,6 @@ z = kde2d(fit.tMM[,1], fit.tMM[,2], n = 500)
 
 plot(x, pch =19, cex = .4)
 
-print(paste0('Number of components :', theta.tMM$G))
+print(paste0('Number of components: ', theta.tMM$G))
 contour(z, drawlabels = FALSE, nlevels = 11, col = my.cols, add=TRUE)
 ```

@@ -1,6 +1,13 @@
 t Mixture Model
 ================
 
+# Installation
+
+``` r
+#install package
+devtools::install_github('AshwinPuri13/tMM')
+```
+
 # Model
 
 Say we have a set of ![p](https://latex.codecogs.com/png.latex?p "p")
@@ -198,11 +205,6 @@ probabilities), add 10 points as noise (sampled from a uniform
 distribution) and assess the fit of both a GMM and a tMM.
 
 ``` r
-#install package
-devtools::install_github('AshwinPuri13/tMM')
-```
-
-``` r
 library(RColorBrewer)
 library(MASS)
 suppressWarnings(library(mixtools))
@@ -285,10 +287,10 @@ z = kde2d(fit.tMM[,1], fit.tMM[,2], n = 500)
 
 plot(x, pch =19, cex = .4)
 
-print(paste0('Number of components :', theta.tMM$G))
+print(paste0('Number of components: ', theta.tMM$G))
 ```
 
-    ## [1] "Number of components :3"
+    ## [1] "Number of components: 3"
 
 ``` r
 contour(z, drawlabels = FALSE, nlevels = 11, col = my.cols, add=TRUE)
