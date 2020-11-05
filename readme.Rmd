@@ -63,7 +63,7 @@ $$
 The estimate for the $\nu_g$'s must be found by solving the following univariate equations for each $g$:
 
 $$
-\log{(\frac{\nu}{2})} - \psi(\frac{\nu}{2}) + 1 - \log{(\frac{\nu_i + p}{2})} +\frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}] (\log{(E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i} \right])} - E \left [U_{ig}| \boldsymbol  {X_i}, \boldsymbol{Z_i} \right])} {\sum_{i = 1}^n E[Z_{ig}|\boldsymbol{X_i}]} = 0
+\log{(\frac{\nu_g}{2})} - \psi(\frac{\nu_g}{2}) + 1 - \log{(\frac{\nu_g + p}{2})} +\frac{\sum_{i=1}^n E[Z_{ig}|\boldsymbol{X_i}] (\log{(E \left [U_{ig}| \boldsymbol{X_i}, \boldsymbol{Z_i} \right])} - E \left [U_{ig}| \boldsymbol  {X_i}, \boldsymbol{Z_i} \right])} {\sum_{i = 1}^n E[Z_{ig}|\boldsymbol{X_i}]} = 0
 $$
 
 # Application

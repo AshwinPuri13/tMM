@@ -179,15 +179,15 @@ be found by solving the following univariate equations for each
 
   
 ![
-\\log{(\\frac{\\nu}{2})} - \\psi(\\frac{\\nu}{2}) + 1 -
-\\log{(\\frac{\\nu\_i + p}{2})} +\\frac{\\sum\_{i=1}^n
+\\log{(\\frac{\\nu\_g}{2})} - \\psi(\\frac{\\nu\_g}{2}) + 1 -
+\\log{(\\frac{\\nu\_g + p}{2})} +\\frac{\\sum\_{i=1}^n
 E\[Z\_{ig}|\\boldsymbol{X\_i}\] (\\log{(E \\left \[U\_{ig}|
 \\boldsymbol{X\_i}, \\boldsymbol{Z\_i} \\right\])} - E \\left \[U\_{ig}|
 \\boldsymbol {X\_i}, \\boldsymbol{Z\_i} \\right\])} {\\sum\_{i = 1}^n
 E\[Z\_{ig}|\\boldsymbol{X\_i}\]} = 0
-](https://latex.codecogs.com/png.latex?%0A%5Clog%7B%28%5Cfrac%7B%5Cnu%7D%7B2%7D%29%7D%20-%20%5Cpsi%28%5Cfrac%7B%5Cnu%7D%7B2%7D%29%20%2B%201%20-%20%5Clog%7B%28%5Cfrac%7B%5Cnu_i%20%2B%20p%7D%7B2%7D%29%7D%20%2B%5Cfrac%7B%5Csum_%7Bi%3D1%7D%5En%20E%5BZ_%7Big%7D%7C%5Cboldsymbol%7BX_i%7D%5D%20%28%5Clog%7B%28E%20%5Cleft%20%5BU_%7Big%7D%7C%20%5Cboldsymbol%7BX_i%7D%2C%20%5Cboldsymbol%7BZ_i%7D%20%5Cright%5D%29%7D%20-%20E%20%5Cleft%20%5BU_%7Big%7D%7C%20%5Cboldsymbol%20%20%7BX_i%7D%2C%20%5Cboldsymbol%7BZ_i%7D%20%5Cright%5D%29%7D%20%7B%5Csum_%7Bi%20%3D%201%7D%5En%20E%5BZ_%7Big%7D%7C%5Cboldsymbol%7BX_i%7D%5D%7D%20%3D%200%0A
+](https://latex.codecogs.com/png.latex?%0A%5Clog%7B%28%5Cfrac%7B%5Cnu_g%7D%7B2%7D%29%7D%20-%20%5Cpsi%28%5Cfrac%7B%5Cnu_g%7D%7B2%7D%29%20%2B%201%20-%20%5Clog%7B%28%5Cfrac%7B%5Cnu_g%20%2B%20p%7D%7B2%7D%29%7D%20%2B%5Cfrac%7B%5Csum_%7Bi%3D1%7D%5En%20E%5BZ_%7Big%7D%7C%5Cboldsymbol%7BX_i%7D%5D%20%28%5Clog%7B%28E%20%5Cleft%20%5BU_%7Big%7D%7C%20%5Cboldsymbol%7BX_i%7D%2C%20%5Cboldsymbol%7BZ_i%7D%20%5Cright%5D%29%7D%20-%20E%20%5Cleft%20%5BU_%7Big%7D%7C%20%5Cboldsymbol%20%20%7BX_i%7D%2C%20%5Cboldsymbol%7BZ_i%7D%20%5Cright%5D%29%7D%20%7B%5Csum_%7Bi%20%3D%201%7D%5En%20E%5BZ_%7Big%7D%7C%5Cboldsymbol%7BX_i%7D%5D%7D%20%3D%200%0A
 "
-\\log{(\\frac{\\nu}{2})} - \\psi(\\frac{\\nu}{2}) + 1 - \\log{(\\frac{\\nu_i + p}{2})} +\\frac{\\sum_{i=1}^n E[Z_{ig}|\\boldsymbol{X_i}] (\\log{(E \\left [U_{ig}| \\boldsymbol{X_i}, \\boldsymbol{Z_i} \\right])} - E \\left [U_{ig}| \\boldsymbol  {X_i}, \\boldsymbol{Z_i} \\right])} {\\sum_{i = 1}^n E[Z_{ig}|\\boldsymbol{X_i}]} = 0
+\\log{(\\frac{\\nu_g}{2})} - \\psi(\\frac{\\nu_g}{2}) + 1 - \\log{(\\frac{\\nu_g + p}{2})} +\\frac{\\sum_{i=1}^n E[Z_{ig}|\\boldsymbol{X_i}] (\\log{(E \\left [U_{ig}| \\boldsymbol{X_i}, \\boldsymbol{Z_i} \\right])} - E \\left [U_{ig}| \\boldsymbol  {X_i}, \\boldsymbol{Z_i} \\right])} {\\sum_{i = 1}^n E[Z_{ig}|\\boldsymbol{X_i}]} = 0
 ")  
 
 # Application

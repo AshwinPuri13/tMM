@@ -490,8 +490,6 @@ mvtmixEstep <-
     list(EZ_X = EZ_X, EU_XZ = EU_XZ)
   }
 
-
-
 #M-step
 mvtmixMstep <-
   function (x,
